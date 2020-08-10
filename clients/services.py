@@ -13,9 +13,13 @@ class ClientService:
             writer.writerow(client.to_dict())
 
     def list_client(self):
-        with open(self.table_name, mode="r") as f:
-            reader = csv.DictReader(f, fieldnames=Client.schema())
-            return list(reader)
+        try:
+            with open(self.table_name, mode="r") as f:
+                reader = csv.DictReader(f, fieldnames=Client.schema())
+                return list(reader)
+        except FileNotFoundError: 
+            click.echo("No clients to list Pls create a client to init the db")
+            return
 
     def update_client(self, updated_client):
         clients = self.list_client()

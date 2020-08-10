@@ -30,9 +30,11 @@ def list(ctx):
     client_list = client_service.list_client()
     click.echo(f"ID  |  NAME  | COMPANY  |  EMAIL  |  POSITION")
     click.echo("*"*50)
-    for client in client_list:
-        click.echo(f"{client['uid']}  | {client['name']}  |  {client['company']}  |  {client['email']}  |  {client['position']}")
-
+    try:
+        for client in client_list:
+            click.echo(f"{client['uid']}  | {client['name']}  |  {client['company']}  |  {client['email']}  |  {client['position']}")
+    except TypeError:
+        click.echo("Clients Empty")
 
 
 @clients.command()
